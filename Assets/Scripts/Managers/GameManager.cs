@@ -17,7 +17,12 @@ public class GameManager : MonoBehaviour
     public float maxTime = 5f;
     int score;
 
+    AudioManager _audio;
+    public AudioData sfxCountdown, sfxRight, musicInGame;
+
     void Start() {
+        _audio = AudioManager.i;
+        
         score = 0;
         gameRunning = false;
 
@@ -40,6 +45,10 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator Countdown() {
+        yield return new WaitForSeconds(1f);
+        
+        _audio.Play(sfxCountdown);
+        
         for (float t = 3; t > 0; t -= Time.deltaTime) {
             countdownText.text = string.Format("{0}...", Mathf.Ceil(t));
             yield return null;
@@ -59,6 +68,8 @@ public class GameManager : MonoBehaviour
         countdownTextAnimator.SetBool("CountdownFinished", true);
         
         StartCoroutine(UpdateTimer());
+
+        _audio.Play(musicInGame);
     }
 
     void GameOver() {
@@ -71,6 +82,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void SockFound() {
+        _audio.Play(sfxRight);
+        
         score++;
         sockManager.NewRound(false, score);
 
@@ -87,13 +100,13 @@ public class GameManager : MonoBehaviour
 
     void Update() {
         #if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.F12))
+            if (Input.GetKeyDown(KeyCode.F3))
                 PlayerPrefs.DeleteAll();
             
-            if (Input.GetKeyDown(KeyCode.F11))
+            if (Input.GetKeyDown(KeyCode.F2))
                 time = 0;
 
-            if (Input.GetKeyDown(KeyCode.F9))
+            if (Input.GetKeyDown(KeyCode.F1))
                 SockFound();
         #endif
     }

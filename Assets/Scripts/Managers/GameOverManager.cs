@@ -9,8 +9,14 @@ public class GameOverManager : MonoBehaviour
     public GameObject gameOverScreen;
     public Text gameOverScoreText;
     public string[] randomMessages;
+    public AudioData sfxGameOver, sfxInGameOutro, musicInGame;
     
     public void GameOver(int score) {
+        AudioManager _audio = AudioManager.i;
+        _audio.Stop(musicInGame);
+        _audio.Play(sfxGameOver);
+        _audio.Play(sfxInGameOutro);
+        
         gameOverScreen.SetActive(true);
 
         int localPersonalBest = PlayerPrefs.GetInt("Personal Best", 0);

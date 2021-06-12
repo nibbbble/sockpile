@@ -7,13 +7,19 @@ public abstract class MenuButton : MonoBehaviour
 {
     public Button button;
     public string scene;
+    public AudioData sfxClick;
+    [HideInInspector]
+    public AudioManager _audio;
 
     void Start() {
+        _audio = AudioManager.i;
         button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
     }
 
-    public abstract void OnClick();
+    public virtual void OnClick() {
+        //_audio.Play("Click", AudioData.SoundType.SFX);
+    }
 
     // public abstract void LoadScene();
 }

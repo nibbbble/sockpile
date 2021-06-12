@@ -6,8 +6,11 @@ public class CreditsButton : MenuButton
 {
     public GameObject creditsScreen;
     bool open;
+    new AudioManager _audio;
 
     void Start() {
+        _audio = AudioManager.i;
+
         creditsScreen.SetActive(false);
         open = false;
 
@@ -15,6 +18,8 @@ public class CreditsButton : MenuButton
     }
     
     public override void OnClick() {
+        _audio.Play(sfxClick);
+        
         if (!open) {
             open = true;
         } else {

@@ -11,6 +11,7 @@ public class Sock : MonoBehaviour
 
     GameManager gameManager;
     SockManager sockManager;
+    AudioManager _audio;
     Sprite sprite;
     bool dragging = false;
     // float distance;
@@ -20,6 +21,7 @@ public class Sock : MonoBehaviour
         GameObject gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponentInChildren<GameManager>();
         sockManager = gameController.GetComponentInChildren<SockManager>();
+        _audio = AudioManager.i;
 
         sprite = spriteRenderer.sprite;
         CreateDropShadow();
@@ -49,6 +51,12 @@ public class Sock : MonoBehaviour
                 if (hit.transform == transform) {
                     gameObject.transform.SetAsLastSibling();
 
+                    if (chosen) {
+                        gameManager.SockFound();
+                    } else {
+                        _audio.Play("Wrong", AudioData.SoundType.SFX);
+                    }
+
                     Vector3 mousePos = Input.mousePosition;
                     Vector3 distanceToScreen = Camera.main.WorldToScreenPoint(transform.position);
                     distance = Camera.main.ScreenToWorldPoint(
@@ -59,10 +67,6 @@ public class Sock : MonoBehaviour
                         )
                     ) - transform.position;
                     dragging = true;
-
-                    if (chosen) {
-                        gameManager.SockFound();
-                    }
                 }
             }
         }
