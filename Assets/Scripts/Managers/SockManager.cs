@@ -9,6 +9,7 @@ public class SockManager : MonoBehaviour
     public Sprite[] sockSprites;
     public Sprite[] hardSockSprites;
     public GameObject sockParent;
+    public Sprite sockShadow;
     public int sockSpawnRate = 5;
     public float circleRadius = 10f;
     List<Sprite> sockSpritesList;
@@ -30,21 +31,14 @@ public class SockManager : MonoBehaviour
                 sockSpawnRate++;
 
         if (score % 4 == 0) {
-            if (hardSockSprites[sockSpritesIndex] != null)
+            if (sockSpritesIndex < hardSockSprites.Length) {
                 sockSpritesList.Add(hardSockSprites[sockSpritesIndex]);
-            // Debug.LogFormat(
-            //     "Added {0} with index {1}.", 
-            //     hardSockSprites[sockSpritesIndex], 
-            //     sockSpritesIndex
-            // );
-
-            sockSpritesIndex++;
+                sockSpritesIndex++;
+            }
         }
         
         foreach (Transform child in sockParent.transform) {
-            if (child.TryGetComponent<Sock>(out Sock sock)) {
-                sock.Destroy();
-            }
+            Destroy(child.gameObject);
         }
         
         Sprite chosenSock = ChooseSock();
@@ -65,16 +59,16 @@ public class SockManager : MonoBehaviour
         }
         
         // spawn the chosen sock
-        SpawnSock(chosenSock, true /*,0*/);
+        SpawnSock(chosenSock, true);
 
         // then spawn all socks!
         for (int i = 0; i < spawnRate; i++) {
             Sprite randomSockSprite = newSockSprites[Random.Range(0, newSockSprites.Count)];
-            SpawnSock(randomSockSprite, false /*,i + 1*/);
+            SpawnSock(randomSockSprite, false);
         }
     }
 
-    void SpawnSock(Sprite _sock, bool chosen /*,int order*/) {
+    void SpawnSock(Sprite _sock, bool chosen) {
         GameObject sock = sockBase;
         // uniform distribution
         // https://forum.unity.com/threads/centre-of-sphere-for-random-insideunitsphere.83824/
@@ -84,6 +78,8 @@ public class SockManager : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
 
         GameObject spawnedSock = Instantiate(sock, position, rotation);
+        spawnedSock.name = "Sock";
+
         GameObject spawnedSockParent = sockParent;
         SpriteRenderer spawnedSockSprite = spawnedSock.GetComponent<SpriteRenderer>();
         spawnedSockSprite.sprite = _sock;
@@ -93,5 +89,9 @@ public class SockManager : MonoBehaviour
             Sock spawnedSockScript = spawnedSock.GetComponent<Sock>();
             spawnedSockScript.chosen = true;
         }
+    }
+
+    public Sprite GetSockShadow() {
+        return sockShadow;
     }
 }
