@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
 
         if (score % 10 == 0 && maxTime > 3f) {
             maxTime -= 1f;
+            timer.maxValue = maxTime;
             // Debug.Log(maxTime);
         }
 
