@@ -16,7 +16,7 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: c6ec703b8dd1e374ca2a9cd9566c5fae, type: 3}
   soundType: 1
   group: {fileID: 1043980576619594224, guid: 9f0569b8ff5c7f547ac15be15e7046be, type: 2}
-  volume: 0.789
+  volume: 0.698
   pitch: 1
   loop: 0
   source: {fileID: 0}

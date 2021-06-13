@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Text countdownText;
     public GameObject countdownBackground;
     public bool gameRunning;
+    public bool debugMode;
     public float time;
     public float maxTime = 5f;
     int score;
@@ -25,7 +26,11 @@ public class GameManager : MonoBehaviour
         
         score = 0;
         gameRunning = false;
-
+        
+        #if UNITY_EDITOR
+            if (debugMode)
+                maxTime = Mathf.Infinity;
+        #endif
         timer.maxValue = maxTime;
         timer.value = timer.maxValue;
 
@@ -55,7 +60,6 @@ public class GameManager : MonoBehaviour
         }
 
         GameStart();
-        
     }
 
     void GameStart() {

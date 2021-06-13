@@ -11,7 +11,7 @@ public abstract class MenuButton : MonoBehaviour
     [HideInInspector]
     public AudioManager _audio;
 
-    void Start() {
+    public virtual void Start() {
         _audio = AudioManager.i;
         button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);

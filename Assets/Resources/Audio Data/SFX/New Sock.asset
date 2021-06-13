@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 826f5540ee89e554daabe59947d67608, type: 3}
-  m_Name: Wrong
+  m_Name: New Sock
   m_EditorClassIdentifier: 
-  description: wrong
-  clip: {fileID: 8300000, guid: e9643be2f995d8340b4f1fa622c0773a, type: 3}
+  description: 'new sokc
+
+'
+  clip: {fileID: 8300000, guid: bab9bce16801cc4499801a1cd222bf16, type: 3}
   soundType: 1
   group: {fileID: 1043980576619594224, guid: 9f0569b8ff5c7f547ac15be15e7046be, type: 2}
-  volume: 0.713
+  volume: 0.736
   pitch: 1
   loop: 0
   source: {fileID: 0}

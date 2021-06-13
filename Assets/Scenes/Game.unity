@@ -571,7 +571,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -50}
+  m_LocalPosition: {x: 0, y: 0, z: -500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -819,6 +819,7 @@ MonoBehaviour:
   countdownText: {fileID: 1961068119}
   countdownBackground: {fileID: 445111103}
   gameRunning: 0
+  debugMode: 0
   time: 0
   maxTime: 10
   sfxCountdown: {fileID: 11400000, guid: a30606d703e62294ab24d72914e4c037, type: 2}
@@ -1324,6 +1325,7 @@ MonoBehaviour:
   sockShadow: {fileID: 21300000, guid: 612dfb3f8df298f44b05d07503f1fc1f, type: 3}
   sockSpawnRate: 6
   circleRadius: 5
+  sfxNewSock: {fileID: 11400000, guid: 8c26d91ce90083548996a6026b35b548, type: 2}
 --- !u!1 &1146520554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1471,7 +1473,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313825755}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1914,7 +1916,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1701107317
 MonoBehaviour:
@@ -2027,8 +2029,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5.000004, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1907317729
 GameObject:
@@ -5212,6 +5214,10 @@ PrefabInstance:
     - target: {fileID: 4908790148021214153, guid: ad16263645fef8b43a4dfd0715f9389c, type: 3}
       propertyPath: m_Name
       value: Transition Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908790148021214153, guid: ad16263645fef8b43a4dfd0715f9389c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4908790148021214154, guid: ad16263645fef8b43a4dfd0715f9389c, type: 3}
       propertyPath: m_RootOrder

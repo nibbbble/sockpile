@@ -12,8 +12,10 @@ public class SockManager : MonoBehaviour
     public Sprite sockShadow;
     public int sockSpawnRate = 5;
     public float circleRadius = 10f;
+    public AudioData sfxNewSock;
     List<Sprite> sockSpritesList;
     int sockSpritesIndex;
+    int highestOrder;
 
     void Start() {
         sockSpritesList = new List<Sprite>();
@@ -34,6 +36,7 @@ public class SockManager : MonoBehaviour
             if (sockSpritesIndex < hardSockSprites.Length) {
                 sockSpritesList.Add(hardSockSprites[sockSpritesIndex]);
                 sockSpritesIndex++;
+                AudioManager.i.Play(sfxNewSock);
             }
         }
         
@@ -59,31 +62,34 @@ public class SockManager : MonoBehaviour
         }
         
         // spawn the chosen sock
-        SpawnSock(chosenSock, true);
+        SpawnSock(chosenSock, true, 0);
+
+        highestOrder = 0;
 
         // then spawn all socks!
         for (int i = 0; i < spawnRate; i++) {
             Sprite randomSockSprite = newSockSprites[Random.Range(0, newSockSprites.Count)];
-            SpawnSock(randomSockSprite, false);
+            SpawnSock(randomSockSprite, false, i + 1);
         }
     }
 
-    void SpawnSock(Sprite _sock, bool chosen) {
+    void SpawnSock(Sprite _sock, bool chosen, int order) {
         GameObject sock = sockBase;
-        // uniform distribution
-        // https://forum.unity.com/threads/centre-of-sphere-for-random-insideunitsphere.83824/
-        // Vector2 randomCircle = Random.insideUnitCircle * circleRadius;
-        // Vector2 position = new Vector2(Mathf.Sqrt(randomCircle.x), Mathf.Sqrt(randomCircle.y));
         Vector2 position = Random.insideUnitCircle * circleRadius;
         Quaternion rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
 
         GameObject spawnedSock = Instantiate(sock, position, rotation);
         spawnedSock.name = "Sock";
+        // minus for moving forward
 
         GameObject spawnedSockParent = sockParent;
         SpriteRenderer spawnedSockSprite = spawnedSock.GetComponent<SpriteRenderer>();
         spawnedSockSprite.sprite = _sock;
         spawnedSock.transform.SetParent(spawnedSockParent.transform);
+
+        spawnedSock.transform.position -= new Vector3(0, 0, order / 2);
+        spawnedSockSprite.sortingOrder = order;
+        highestOrder = spawnedSockSprite.sortingOrder;
         
         if (chosen) {
             Sock spawnedSockScript = spawnedSock.GetComponent<Sock>();
@@ -93,5 +99,32 @@ public class SockManager : MonoBehaviour
 
     public Sprite GetSockShadow() {
         return sockShadow;
+    }
+
+    public int GetHighestOrder() {
+        return highestOrder;
+    }
+
+    Transform lastClickedSock;
+    public void LastClickedSock(Transform last) {
+        lastClickedSock = last;
+    }
+
+    public void Reorder(Transform selectedSock) {
+        if (lastClickedSock != selectedSock) {
+            foreach (Transform child in sockParent.transform) {
+                if (child == selectedSock) continue;
+                
+                SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
+                GameObject shadow = child.transform.GetChild(0).gameObject;
+                SpriteRenderer shadowSprite = shadow.GetComponent<SpriteRenderer>();
+
+                // plus for moving back
+                child.transform.position += new Vector3(0, 0, 1);
+                sprite.sortingOrder--;
+                shadowSprite.sortingOrder--;
+            }
+        }
+        
     }
 }
